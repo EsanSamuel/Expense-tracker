@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Expense Tracker</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="menubar" onclick="openMe()">&#9776;</div>
+
+	<div class="opener" id="opener">
+		<h1 class="op">Expense Tracker</h1>
+	</div>
+
+	<h1 class="logo">Budget</h1>
+
+	<div class="menu">
+		<input type="text" id="srch" placeholder="Search">
+		<ul>
+			<li>Overview</li>
+			<li>Finance</li>
+			<li>Calender</li>
+			<li>Event</li>
+		</ul>
+	</div>
+
+	<div class="menu2">
+		<input type="file" class="fileInput" accept="image/*" hidden>
+		<button class="choose">Edit</button>
+		<div class="profileImg">
+			<img src="metatron.png" alt="profileImg">
+		</div>
+
+<div class="wallet">
+		<h4 class="h4">Wallets</h4>
+		<div class="color" onclick="OpenWallet()"></div><h5 class="h5" onclick="OpenWallet()">Phone Wallet</h5><br><br><br>
+		<div class="color2"></div><h5>Purchased Items</h5>
+	</div>
+
+
+<div class="Category">
+		<h4 class="h4" id="h4">Categories</h4>
+		<div class="color3"></div><h5>Etherium</h5><br><br><br>
+		<div class="color4"></div><h5>Cash</h5><br><br><br>
+         <div class="color5"></div><h5>Shopping</h5><br><br><br>
+		<div class="color6"></div><h5>Calculator</h5><br><br><br>
+		<div class="color7" onclick="openMissed()"></div><span id="MissedNo">1</span><h5 id="SubmitMissed" onclick="openMissed()">Missed Tasks</h5><br><br><br>
+	</div>
+
+	</div>
+
+	<div class="Missed" id="Missed">
+		<div class="cancel" onclick="closeMissed()">&#10006;</div>
+		<div class="missedp">
+		</div>
+	</div>
+
+
+<div class="main">
+	<h1 class="txt1">Home Wallet</h1>
+</div>
+
+<h3>No of Expenses</h3><div class="length"></div>
+
+
+<div class="options">
+	<div class="option-track">
+	<button class="tools btn active" onclick="openForm()">Add Expenses</button>
+	<button class="tools btn">Group</button>
+	<button class="tools btn">Extended</button>
+	<button class="tools btn">Sample</button>
+	<button class="tools btn">Resolution</button>
+</div>
+</div>
+
+<div class="form" id="form">
+	<div class="cancel" onclick="closeForm()">&#10006;</div>
+	<h2 class="h2">Enter Product</h2><br>
+	<input type="text" id="name" class="name1" onkeyup="validateName()" placeholder="Enter Product Name"><span id="name1Error"></span><br><br>
+	
+	<input type="text" id="name2" class="name2" onkeyup="validateName2()" placeholder="Enter Time"><span id="name2Error"></span><br><br>
+	
+	<input type="text" id="name3" class="name3" onkeyup="validateName3()" placeholder="Enter Amount"><span id="name3Error"></span><br><br>
+	
+	<input type="date" id="name4" class="name4" onkeyup="validateName4()" placeholder="Enter Budget"><span id="name4Error"></span><br><br>
+
+
+		<button class="bn" id="bn" onclick="return validateForm()">Add to cart</button><span id="submitError"></span>
+</div>
+
+
+<div class="productCard"></div>
+
+<div class="Banking">
+	<div class="cancel" onclick="closeWallet()">&#10006;</div>
+	<div class="cardbank"><span id="currency">$</span><h4 id="Balance">1200</h4></div>
+		<h4 class="transact">Transact Money</h4>
+		<input type="text" id="amount" placeholder="Enter Amount">
+		<input type="text" id="acct" placeholder="Enter Acct No">
+		<button class="bankbtn">Purchase</button>
+</div>
+
+
+
+
+<script type="text/javascript">
+	/*Built with HTML,CSS & javaScript by
+	Esan Samuel*/
+	//declaring the variables
+	const Body = document.querySelector("body")
+	Menu2 = document.querySelector(".menu2")
+	Expenses = document.getElementById("form")
+	Submit = document.querySelector(".bn")
+	Elem = document.querySelector(".productCard")
+	Name = document.getElementById("name")
+	Name2 = document.getElementById("name2")
+	Name3 = document.getElementById("name3")
+	Name4 = document.getElementById("name4")
+	productNo = document.querySelector(".length")
+	ExpensesNo = document.querySelectorAll(".num")
+	toolBtn = document.querySelectorAll(".tools")
+	FileInput = document.querySelector(".fileInput")
+	ProfileImg = document.querySelector(".profileImg img")
+	chooseBtn = document.querySelector(".choose")
+	Opener = document.getElementById("opener")
+	Missed = document.getElementById("Missed")
+	SubmitMissed = document.querySelector(".doneBtn")
+	ElemMissed = document.querySelector(".missedp")
+	MissedNo = document.getElementById("MissedNo")
+	MissedExpenses = document.querySelectorAll(".bord")
+	Name1Error = document.getElementById("name1Error")
+	Name2Error = document.getElementById("name2Error")
+	Name3Error = document.getElementById("name3Error")
+	Name4Error = document.getElementById("name4Error")
+	SubmitError = document.getElementById("submitError")
+	Banking = document.querySelector(".Banking")
+	Balance = document.getElementById("Balance")
+	Amount = document.getElementById("amount")
+	Acct = document.getElementById("acct")
+	Bankbtn = document.querySelector(".bankbtn")
+	menubar = document.querySelector(".menubar")
+ 
+    //This is for adding the number of task created
+	productNo.innerHTML = ExpensesNo.length
+	MissedNo.innerHTML = MissedExpenses.length
+
+    function openMe(){
+	Menu2.classList.toggle("openMenu")
+	if(Menu2.classList.contains("openMenu")){
+		menubar.innerHTML="&#10006;"
+	}else{
+		menubar.innerHTML ="&#9776;"
+	}
+
+    }
+
+    //This is to open & close the form for adding task
+	function openForm(){
+		Expenses.classList.add("openF")
+	}
+
+	function closeForm(){
+		Expenses.classList.remove("openF")
+	}
+
+    /*This is to add the task written on the inputs tags
+    to the task card*/
+	Submit.addEventListener("click",(e)=>{
+		e.preventDefault()
+		addBudget()
+		ExpensesNo = document.querySelectorAll(".num")
+		productNo.innerHTML = ExpensesNo.length
+	})
+
+	function addBudget(){
+		let card = document.createElement("div")
+		card.classList.add("product")
+		card.innerHTML =`
+		<div class="num"></div>
+		<h3 class="donetxt"></h3>
+		<h4 id="c1">${Name.value}</h4>
+		<h4 id="c2">${Name2.value}</h4>
+		<h4 id="c3">${Name3.value}</h4>
+		<h4 id="c4">${Name4.value}</h4>
+		<button class="doneBtn">&#10004;</button>
+		<button class="removeBtn">&#10006;</button>
+		`
+		Elem.appendChild(card)
+		Name.value=""
+		Name2.value=""
+		Name3.value=""
+		Name4.value=""
+
+        //This is to delete task
+		let Delete = card.querySelector(".removeBtn")
+		Delete.addEventListener("click",()=>{
+			card.remove()
+			ExpensesNo = document.querySelectorAll(".num")
+		    productNo.innerHTML = ExpensesNo.length
+		})
+
+        //This indicates a task is done
+		let Done = card.querySelector(".doneBtn")
+		donetxt = document.querySelector(".donetxt")
+		Done.addEventListener("click",(e)=>{
+			e.preventDefault()
+			donetxt.innerHTML = "This Task has been done!"
+			card.classList.add("taskdone")
+		})
+
+        /*The setInterval tag is used to automatically give
+        a function without clicking*/
+		setInterval(close,60*60*24)
+         
+        /*This function is to remove the task after 24 hours
+        with the setInterval function*/
+		function close(){
+			card.remove()
+			ExpensesNo = document.querySelectorAll(".num")
+		    productNo.innerHTML = ExpensesNo.length
+		}
+	}
+
+    //This is for the buttons
+	toolBtn.forEach((btn)=>{
+		btn.addEventListener("click",()=>{
+			document.querySelector(".options .active")
+			.classList.remove("active")
+			btn.classList.add("active")
+		})
+	})
+
+    //This is used for the profile picture
+	const loadImg = () =>{
+		let file = FileInput.files[0]
+		if(!file) return
+		ProfileImg.src = URL.createObjectURL(file)
+	}
+
+	setInterval(closeOpener,2000)
+
+    //This is for the opening animation
+	function closeOpener(){
+		Opener.remove()
+	}
+
+    //This is used to open the missed task
+	function openMissed(){
+		Missed.classList.add("OpenM")
+	}
+
+	function closeMissed(){
+		Missed.classList.remove("OpenM")
+	}
+
+    //This is used to add missed task after 24 hours
+	setInterval(addMissed,60*60*24)
+	
+		function addMissed(){
+		let miss = document.createElement("div")
+		miss.classList.add("details")
+		miss.innerHTML =`
+				<div class="bord">
+				<h6>${Name.value}</h6>
+				<h6>${Name2.value}</h6>
+				<h6>${Name3.value}</h6>
+				<h6>${Name4.value}</h6>
+			</div>
+		`
+		ElemMissed.appendChild(miss)
+		MissedExpenses = document.querySelectorAll(".bord")
+		MissedNo.innerHTML = MissedExpenses.length
+	}
+
+    //This is to validate the form
+	function validateName(){
+		var name = document.querySelector(".name1").value
+
+		if(name.length == 0){
+			Name1Error.innerHTML = "Fill inputs!"
+			return false
+		}
+
+		Name1Error.innerHTML =""
+		return true
+	}
+
+	function validateName2(){
+		var name2 = document.querySelector(".name2").value
+
+		if(name2.length == 0){
+			Name2Error.innerHTML ="Fill inputs!"
+			return false
+		}
+
+		Name2Error.innerHTML =""
+		return true
+	}
+
+	function validateName3(){
+		var name3 = document.querySelector(".name3").value
+
+		if(name3.length == 0){
+			Name3Error.innerHTML ="Fill inputs!"
+			return false
+		}
+
+		Name3Error.innerHTML =""
+		return true
+	}
+
+	function validateName4(){
+		var name4 = document.querySelector(".name4").value
+
+		if(name4.length == 0){
+			Name4Error.innerHTML ="Fill inputs!"
+			return false
+		}
+
+		Name4Error.innerHTML =""
+		return true
+	}
+
+	function validateForm(){
+		if(!validateName() || !validateName2() || !validateName3() || !validateName4()){
+
+			SubmitError.innerHTML = ""
+			return false
+		}
+	}
+
+    //This is for the banking transaction
+	Bankbtn.addEventListener("click",()=>{
+		 if (Number(Balance.innerHTML) < 0){
+		 	alert("You have no balance")
+		 }
+		 else if (Number(Amount.value) > Number(Balance.innerHTML)){
+		 	alert("Your balance is low")
+		 }
+		 else{
+		 	 Balance.innerHTML = Number(Balance.innerHTML) - Number(Amount.value)
+		 }
+	})
+
+	function OpenWallet(){
+		Banking.classList.add("Openwallet")
+	}
+
+	function closeWallet(){
+		Banking.classList.remove("Openwallet")
+	}
+
+    //The event listener function for the seeting of dp
+	FileInput.addEventListener("change",loadImg)
+	chooseBtn.addEventListener("click",() => FileInput.click())
+</script>
+
+
+</body>
+</html>
